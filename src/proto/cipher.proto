@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+package proto;
+option go_package = "proto/cipher";
+
+message EncryptRequest {
+  bytes plain = 1;
+}
+
+message EncryptResponse {
+  bytes crypted = 1;
+}
+
+message DecryptRequest {
+  bytes crypted = 1;
+}
+
+message DecryptResponse {
+  bytes plain = 1;
+}
+
+service CipherService {
+  rpc Encrypt(EncryptRequest) returns (EncryptResponse);
+  rpc Decrypt(DecryptRequest) returns (DecryptResponse);
+}

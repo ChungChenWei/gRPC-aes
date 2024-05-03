@@ -28,4 +28,4 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: ${{ env.REPOSITORY }}/grpc-aes:${{ github.ref_name }}
+          tags: ${{ env.REPOSITORY }}:${{ github.ref_name }}

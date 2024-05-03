@@ -12,7 +12,7 @@ fi
 
 if [[ $mode == "run" ]]; then
     docker run -it --rm \
-        -p 3000:3000 \
+        -p 9000:3000 \
         --env-file .env \
         --name ${container_name} \
         ${image_name}
@@ -24,6 +24,17 @@ if [[ $mode == "proto" ]]; then
         namely/protoc \
         --go_out=./cipher --go_opt=paths=source_relative \
         --go-grpc_out=./cipher --go-grpc_opt=paths=source_relative \
+        --proto_path=./proto \
+        cipher.proto
+fi
+
+if [[ $mode == "proto-js" ]]; then
+    docker run \
+        -v $PWD/src:/defs \
+        namely/protoc \
+        --ts_proto_out=./js --ts_proto_opt=outputServices=grpc-js \
+        --ts_proto_opt=esModuleInterop=true \
+        --ts_proto_opt=env=node \
         --proto_path=./proto \
         cipher.proto
 fi

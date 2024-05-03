@@ -37,7 +37,11 @@ func main() {
 	if err != nil {
 		fmt.Printf("failed to listen: %v", err)
 	}
-	s := grpc.NewServer()
+	maxMsgSize := 50 * 1024 * 1024
+	s := grpc.NewServer(
+		grpc.MaxRecvMsgSize(maxMsgSize),
+		grpc.MaxSendMsgSize(maxMsgSize),
+	)
 	cipher.RegisterCipherServiceServer(s, &server{})
 	log.Printf("Server listening at %v", lis.Addr())
 	if err := s.Serve(lis); err != nil {
